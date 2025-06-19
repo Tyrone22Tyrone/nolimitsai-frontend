@@ -1,7 +1,7 @@
 
+import './globals.css'; // Optional if using global CSS
+import React from 'react';
 
-}
-// app/layout.tsx
 export const metadata = {
   title: 'NoLimitsAI',
   description: 'AI Assistant',
