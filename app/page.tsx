@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Card, CardContent } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 
 export default function Home() {
   const [messages, setMessages] = useState<{ role: string; text: string }[]>([]);
@@ -46,7 +46,6 @@ export default function Home() {
           </Card>
         ))}
       </div>
-
       <div className="mt-4 flex gap-2">
         <Input
           value={input}
@@ -54,9 +53,7 @@ export default function Home() {
           onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
           placeholder="Type your message..."
         />
-        <Button onClick={sendMessage} disabled={loading}>
-          Send
-        </Button>
+        <Button onClick={sendMessage} disabled={loading}>Send</Button>
       </div>
     </div>
   );
