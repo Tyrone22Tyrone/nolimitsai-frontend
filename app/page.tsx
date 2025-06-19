@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -5,24 +7,26 @@ import { Button } from "@/components/ui/button";
 
 export default function Home() {
   const [messages, setMessages] = useState<{ role: string; text: string }[]>([]);
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
 
   const sendMessage = async () => {
     if (!input.trim()) return;
-    const userMsg = { role: "user", text: input };
 
+    const userMsg = { role: "user", text: input };
     const bot = JSON.parse(localStorage.getItem("selectedBot") || "{}");
     const systemPrompt = bot.system_prompt || "You are a helpful assistant.";
 
     setMessages([...messages, userMsg]);
-    setInput("");
+    setInput('');
     setLoading(true);
 
     const res = await fetch(process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/chat", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message: input, system_prompt: systemPrompt })
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ message: input, system_prompt: systemPrompt }),
     });
 
     const data = await res.json();
@@ -42,9 +46,17 @@ export default function Home() {
           </Card>
         ))}
       </div>
+
       <div className="mt-4 flex gap-2">
-        <Input value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && sendMessage()} placeholder="Type your message..." />
-        <Button onClick={sendMessage} disabled={loading}>Send</Button>
+        <Input
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
+          placeholder="Type your message..."
+        />
+        <Button onClick={sendMessage} disabled={loading}>
+          Send
+        </Button>
       </div>
     </div>
   );
